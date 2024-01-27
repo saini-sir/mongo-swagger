@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class EmployeeController {
     private  final EmployeeService employeeService;
 
@@ -22,9 +23,23 @@ public class EmployeeController {
        return  new ResponseEntity<>(dto , HttpStatus.CREATED);
     }
 
-    @GetMapping("all")
+    @GetMapping("/all")
     public ResponseEntity<List<EmployeeDto>> getAllData(){
         List<EmployeeDto> dto = employeeService.getAllData();
         return  new ResponseEntity<>(dto, HttpStatus.OK);
     }
+     @DeleteMapping("/{id}")
+    public  ResponseEntity<?> deleteById(@RequestParam String id){
+        employeeService.deleteById(id);
+        return  new ResponseEntity<>("Record Deleted",HttpStatus.OK);
+     }
+     @PutMapping("/{id}")
+    public ResponseEntity<EmployeeDto> updateData(
+            @RequestParam String id,
+            @RequestBody EmployeeDto employeeDto ){
+       EmployeeDto dto =  employeeService.updateData(id,employeeDto);
+       return  new ResponseEntity<>(dto, HttpStatus.OK);
+     }
+
+
 }

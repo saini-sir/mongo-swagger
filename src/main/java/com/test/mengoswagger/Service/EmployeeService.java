@@ -10,4 +10,8 @@ public interface EmployeeService {
 
 
    List<EmployeeDto> getAllData();
+
+    void deleteById(String id);
+
+    EmployeeDto updateData(String id, EmployeeDto employeeDto);
 }

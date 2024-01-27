@@ -38,6 +38,25 @@ public class EmployeeServiceImpl implements  EmployeeService{
         List<EmployeeDto> dto = emp.stream().map(p->mapToDto(p)).collect(Collectors.toList());
         return dto;
     }
+
+    @Override
+    public void deleteById(String id) {
+      employeeRepository.deleteById(id);
+    }
+
+    @Override
+    public EmployeeDto updateData(String id, EmployeeDto employeeDto) {
+        Employee emp = employeeRepository.findById(id).get();
+        emp.setName(employeeDto.getName());
+        emp.setAddress(employeeDto.getAddress());
+        Employee saveemployee = employeeRepository.save(emp);
+        EmployeeDto dto = new EmployeeDto();
+        dto.setId(saveemployee.getId());
+        dto.setName(saveemployee.getName());
+        dto.setAddress(saveemployee.getAddress());
+        return dto;
+    }
+
     EmployeeDto mapToDto (Employee emp){
         EmployeeDto dto = new EmployeeDto();
         dto.setId(emp.getId());
